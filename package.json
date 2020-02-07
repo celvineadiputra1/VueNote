@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --no-clean",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "bootstrap": "^4.4.1",
     "core-js": "^3.4.4",
     "vue": "^2.6.10"
   },
@@ -29,7 +30,9 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-console" : "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

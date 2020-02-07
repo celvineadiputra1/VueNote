@@ -1,28 +1,49 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12 col-md-2">
+          <div class="container border-bottom-1 pb-3">
+            <div class="row">
+              <div class="col-sm-12">
+                <h1>
+                  Logo
+                </h1>
+              </div>
+            </div>
+          </div>
+          <ListNote />
+        </div>
+        <div class="col-sm-12 col-md-10">
+          <FormNote />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+  import FormNote from './components/FormNote.vue'
+  import ListNote from './components/ListNote.vue'
+  export default {
+    name: 'app',
+    components: {
+      FormNote,
+      ListNote
+    },
+    methods: {
 
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
+    }
   }
-}
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  .border-bottom-1{
+    border: 0px;
+    border-bottom: 1px solid black;
+  }
 </style>
