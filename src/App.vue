@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-12 col-md-2">
+        <div class="col-sm-12 col-md-2 bg-gray min-vh-100 border-right-1">
           <div class="container border-bottom-1 pb-3">
             <div class="row">
               <div class="col-sm-12">
@@ -12,10 +12,13 @@
               </div>
             </div>
           </div>
-          <ListNote />
+          <button class="btn btn-primary w-100 mb-2 mt-2 text-left" @click="newNote">
+            + New Note
+          </button>
+          <ListNote :propsNotes="notes" :propsEditNote="editNote"/>
         </div>
         <div class="col-sm-12 col-md-10">
-          <FormNote />
+          <FormNote :propsSaveNote="saveNote" :propsDataForm="dataForm" :propsUpdateNote="updateNote" :propsRemoveNote="deleteNote"/>
         </div>
       </div>
     </div>
@@ -27,21 +30,56 @@
   import ListNote from './components/ListNote.vue'
   export default {
     name: 'app',
+    data : function(){
+      return{
+        dataForm : {},
+        notes : []
+      }
+    },
     components: {
       FormNote,
       ListNote
     },
     methods: {
+      newNote(){
+        this.dataForm = {'id':0,'title': '','description' : ''}
+      },
+      saveNote(id, title, description){
+        let newId = 0;
+        if(this.notes.length === 0){
+          newId = 1;
+        }else{
+          newId = this.notes[this.notes.length - 1].id + 1;
+        }
 
+        let note = {
+          'id' : newId,
+          'title' : title,
+          'description' : description
+        };
+        this.notes.push(note);
+        this.editNote(newId);
+      },
+      editNote(id){
+        // console.log('app ' + id);
+        this.dataForm = this.notes.find(notes => notes.id === id);
+        // console.log(this.dataForm);
+      },
+      updateNote(id, title, description){
+        let noteIndex = this.notes.findIndex(notes => notes.id === id);
+        this.notes[noteIndex].title = title;
+        this.notes[noteIndex].description = description;
+      },
+      deleteNote(id){
+        let noteIndex = this.notes.findIndex(notes => notes.id === id);
+        this.notes.splice(noteIndex,1);
+        console.log(`${id} dan ${noteIndex}`);
+      }
     }
   }
 </script>
 
 <style scoped>
-  * {
-    padding: 0;
-    margin: 0;
-  }
   .border-bottom-1{
     border: 0px;
     border-bottom: 1px solid black;
