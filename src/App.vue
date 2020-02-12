@@ -15,10 +15,10 @@
           <button class="btn btn-primary w-100 mb-2 mt-2 text-left" @click="newNote">
             + New Note
           </button>
-          <ListNote :propsNotes="notes" :propsEditNote="editNote"/>
+          <ListNote :propsNotes="notes"/>
         </div>
         <div class="col-sm-12 col-md-10">
-          <FormNote :propsDataForm="dataForm" :propsUpdateNote="updateNote" :propsRemoveNote="deleteNote"/>
+          <FormNote :propsUpdateNote="updateNote" :propsRemoveNote="deleteNote"/>
         </div>
       </div>
     </div>
@@ -32,7 +32,6 @@
     name: 'app',
     data : function(){
       return{
-        dataForm : {},
         notes : []
       }
     },
@@ -59,11 +58,6 @@
         };
         this.notes.push(note);
         this.editNote(newId);
-      },
-      editNote(id){
-        // console.log('app ' + id);
-        this.dataForm = this.notes.find(notes => notes.id === id);
-        // console.log(this.dataForm);
       },
       updateNote(id, title, description){
         let noteIndex = this.notes.findIndex(notes => notes.id === id);

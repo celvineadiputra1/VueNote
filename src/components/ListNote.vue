@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul class="list-group">
-            <li v-for="(row, index) in notes" :key="index" class="list-group-item mb-2" @click="idNote(row.id)">
+            <li v-for="(row, index) in notes" :key="index" class="list-group-item mb-2" @click="editNote(row.id)">
                 <label class="d-block">{{row.title}}</label>
                 <span class="d-block fontDes border-top-1">
                     {{row.description}}
@@ -36,10 +36,12 @@
             }
         },
         methods: {
-            idNote(id) {
-                this.propsEditNote(id);
-                console.log(id);
-            }
+            editNote(id) {
+                // console.log('app ' + id);
+                let dataForm = this.notes.find(notes => notes.id === id);
+                this.$root.$emit('emitForm', dataForm);
+                // console.log(this.dataForm);
+            },
         }
     }
 </script>
