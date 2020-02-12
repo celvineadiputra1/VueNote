@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul class="list-group">
-            <li v-for="(row, index) in propsNotes" :key="index" class="list-group-item mb-2" @click="idNote(row.id)">
+            <li v-for="(row, index) in notes" :key="index" class="list-group-item mb-2" @click="idNote(row.id)">
                 <label class="d-block">{{row.title}}</label>
                 <span class="d-block fontDes border-top-1">
                     {{row.description}}
@@ -14,6 +14,19 @@
 <script>
 export default {
     name : "ListNote",
+    data : function(){
+        notes : [
+            {
+                id : 1,
+                title : 'Artikel 1',
+                description : 'Des 1'
+            },{
+                id : 2,
+                title : 'Artikel 2',
+                description : 'Des 2'
+            }
+        ];
+    },
     componets:{
 
     },
