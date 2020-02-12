@@ -63,11 +63,6 @@
         let noteIndex = this.notes.findIndex(notes => notes.id === id);
         this.notes[noteIndex].title = title;
         this.notes[noteIndex].description = description;
-      },
-      deleteNote(id){
-        let noteIndex = this.notes.findIndex(notes => notes.id === id);
-        this.notes.splice(noteIndex,1);
-        console.log(`${id} dan ${noteIndex}`);
       }
     }
   }
