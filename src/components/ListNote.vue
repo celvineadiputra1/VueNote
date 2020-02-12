@@ -42,6 +42,12 @@
                 this.$root.$emit('emitForm', dataForm);
                 // console.log(this.dataForm);
             },
+        },
+        mounted() {
+            this.$root.$on('emitRemove', data => {
+                let noteIndex = this.notes.findIndex(notes => notes.id === data.id);
+                this.notes.splice(noteIndex, 1);
+            });
         }
     }
 </script>

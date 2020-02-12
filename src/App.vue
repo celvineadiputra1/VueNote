@@ -18,7 +18,7 @@
           <ListNote :propsNotes="notes"/>
         </div>
         <div class="col-sm-12 col-md-10">
-          <FormNote :propsUpdateNote="updateNote" :propsRemoveNote="deleteNote"/>
+          <FormNote :propsUpdateNote="updateNote"/>
         </div>
       </div>
     </div>

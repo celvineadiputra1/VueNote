@@ -29,9 +29,6 @@
             },
             propsUpdateNote: {
                 type: Function
-            },
-            propsRemoveNote: {
-                type: Function
             }
         },
         data: function () {
@@ -54,7 +51,8 @@
             },
             submitRemove(e) {
                 e.preventDefault();
-                this.propsRemoveNote(this.id);
+                let data = {id : this.id}
+                this.$root.$emit('emitRemove', data);
                 this.resetInput();
             },
             resetInput() {
