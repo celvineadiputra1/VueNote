@@ -18,7 +18,7 @@
           <ListNote :propsNotes="notes" :propsEditNote="editNote"/>
         </div>
         <div class="col-sm-12 col-md-10">
-          <FormNote :propsSaveNote="saveNote" :propsDataForm="dataForm" :propsUpdateNote="updateNote" :propsRemoveNote="deleteNote"/>
+          <FormNote :propsDataForm="dataForm" :propsUpdateNote="updateNote" :propsRemoveNote="deleteNote"/>
         </div>
       </div>
     </div>
