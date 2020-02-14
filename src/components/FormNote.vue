@@ -6,38 +6,25 @@
                 <button v-if="mode == 'save'" class="btn btn-success mr-2" type="button" @click="submitSave">Save</button>
                 <button v-if="mode == 'update'" class="btn btn-success mr-2" type="button" @click="submitUpdate">Update</button>
                 <button class="btn btn-danger mr-2" @click="submitRemove">Delete</button>
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="id" v-model="id">
-                    <input type="text" class="form-control" placeholder="Judul" v-model="title">
-                    <textarea class="form-control" placeholder="Rencana anda" v-model="description"></textarea>
                 </div>
             </div>
-        </div>
+            <div class="row mt-4">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="id" v-model="id">
+                        <input type="text" class="form-control" placeholder="Judul" v-model="title">
+                        <textarea class="form-control" placeholder="Rencana anda" v-model="description"></textarea>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
 </template>
 
 <script>
-export default {
-    name : 'FormNote',
-    props: {
-        propsSaveNote : {
-            type : Function
-        },
-        propsDataForm : {
-            type : Object
-        },
-        propsUpdateNote: {
-            type : Function
-        },
-        propsRemoveNote: {
-            type : Function
-        }
-    },
+    export default {
+        name: 'FormNote',
+        props: {},
     data : function(){
         return {
             id : 0,
@@ -46,45 +33,56 @@ export default {
             mode : 'save'
         }
     },
-    methods : {
-        submitSave(){
-            this.propsSaveNote(this.id,this.title, this.description);
-            this.resetInput();
+        methods: {
+            submitSave() {
+                let data= {
+                    id : this.id,
+                    title : this.title,
+                    description : this.description
+                }
+                this.$root.$emit('emitSaveNote', data);
+            },
+            submitUpdate(){
+                let data= {
+                    id : this.id,
+                    title : this.title,
+                    description : this.description
+                }
+                this.$root.$emit('emitUpdateNote', data);
+            },
+            submitRemove() {
+                let data = {id : this.id}
+                this.$root.$emit('emitRemove', data);
+                this.resetInput();
+            },
+            resetInput() {
+                this.id = 0;
+                this.title = '';
+                this.description = '';
+            }
         },
-        submitUpdate(){
-            this.propsUpdateNote(this.id, this.title, this.description);
-        },
-        submitRemove(e){
-            e.preventDefault();
-            this.propsRemoveNote(this.id);
-            this.resetInput();
-        },
-        resetInput(){
-            this.id = 0;
-            this.title = '';
-            this.description = '';
-        }
-    },
-    watch: {
-        propsDataForm: function(note){
-            this.id = note.id
-            this.title = note.title
-            this.description = note.description
-            this.mode = note.mode
+        mounted() {
+            this.$root.$on('emitForm', data => {
+                this.id = data.id;
+                this.title = data.title;
+                this.description = data.description;
+                this.mode = data.mode;
+            });
         }
     }
-}
 </script>
 <style scoped>
-*{
-    font-family: 'SecularOne';
-}
-.form-control{
-    border: 0px !important;
-}
-.form-control:focus{
-    outline: none !important;
-    border: none !important;
-    box-shadow: none !important;
-}
+    * {
+        font-family: 'SecularOne';
+    }
+
+    .form-control {
+        border: 0px !important;
+    }
+
+    .form-control:focus {
+        outline: none !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
 </style>

@@ -15,10 +15,10 @@
           <button class="btn btn-primary w-100 mb-2 mt-2 text-left" @click="newNote">
             + New Note
           </button>
-          <ListNote :propsNotes="notes" :propsEditNote="editNote"/>
+          <ListNote :propsNotes="notes"/>
         </div>
         <div class="col-sm-12 col-md-10">
-          <FormNote :propsSaveNote="saveNote" :propsDataForm="dataForm" :propsUpdateNote="updateNote" :propsRemoveNote="deleteNote"/>
+          <FormNote/>
         </div>
       </div>
     </div>
@@ -32,7 +32,6 @@
     name: 'app',
     data : function(){
       return{
-        dataForm : {},
         notes : []
       }
     },
@@ -42,39 +41,10 @@
     },
     methods: {
       newNote(){
-        this.dataForm = {'id':0,'title': '','description' : '', mode:'save'}
-      },
-      saveNote(id, title, description){
-        let newId = 0;
-        if(this.notes.length === 0){
-          newId = 1;
-        }else{
-          newId = this.notes[this.notes.length - 1].id + 1;
-        }
-
-        let note = {
-          'id' : newId,
-          'title' : title,
-          'description' : description
-        };
-        this.notes.push(note);
-        this.editNote(newId);
-      },
-      editNote(id){
-        this.dataForm = this.notes.find(notes => notes.id === id);
-        this.dataForm.mode = 'update';
-      },
-      updateNote(id, title, description){
-        let noteIndex = this.notes.findIndex(notes => notes.id === id);
-        this.notes[noteIndex].title = title;
-        this.notes[noteIndex].description = description;
-      },
-      deleteNote(id){
-        let noteIndex = this.notes.findIndex(notes => notes.id === id);
-        this.notes.splice(noteIndex,1);
-        console.log(`${id} dan ${noteIndex}`);
+        let dataForm = {'id':0,'title': '','description' : '', mode:'save'}
+        this.$root.$emit('emitForm', dataForm);
       }
-    }
+  }
   }
 </script>
 
