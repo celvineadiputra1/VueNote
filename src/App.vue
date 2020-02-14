@@ -42,7 +42,7 @@
     },
     methods: {
       newNote(){
-        this.dataForm = {'id':0,'title': '','description' : ''}
+        this.dataForm = {'id':0,'title': '','description' : '', mode:'save'}
       },
       saveNote(id, title, description){
         let newId = 0;
@@ -61,9 +61,8 @@
         this.editNote(newId);
       },
       editNote(id){
-        // console.log('app ' + id);
         this.dataForm = this.notes.find(notes => notes.id === id);
-        // console.log(this.dataForm);
+        this.dataForm.mode = 'update';
       },
       updateNote(id, title, description){
         let noteIndex = this.notes.findIndex(notes => notes.id === id);

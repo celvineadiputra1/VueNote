@@ -1,9 +1,10 @@
 <template>
     <div class="container-fluid mt-3">
-        <form @submit="submitNote">
+        <form>
             <div class="row">
             <div class="col-sm-12 d-flex justify-content-end">
-                <button class="btn btn-success mr-2" type="submit">Save</button>
+                <button v-if="mode == 'save'" class="btn btn-success mr-2" type="button" @click="submitSave">Save</button>
+                <button v-if="mode == 'update'" class="btn btn-success mr-2" type="button" @click="submitUpdate">Update</button>
                 <button class="btn btn-danger mr-2" @click="submitRemove">Delete</button>
             </div>
         </div>
@@ -41,19 +42,17 @@ export default {
         return {
             id : 0,
             title : '',
-            description : ''
+            description : '',
+            mode : 'save'
         }
     },
     methods : {
-        submitNote(e){
-            e.preventDefault();
-            console.log(this.title);
-            if(this.id == 0){
-                this.propsSaveNote(this.id,this.title, this.description);
-            }else{
-                this.propsUpdateNote(this.id,this.title, this.description);
-            }
+        submitSave(){
+            this.propsSaveNote(this.id,this.title, this.description);
             this.resetInput();
+        },
+        submitUpdate(){
+            this.propsUpdateNote(this.id, this.title, this.description);
         },
         submitRemove(e){
             e.preventDefault();
@@ -71,6 +70,7 @@ export default {
             this.id = note.id
             this.title = note.title
             this.description = note.description
+            this.mode = note.mode
         }
     }
 }
