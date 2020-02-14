@@ -18,7 +18,7 @@
           <ListNote :propsNotes="notes"/>
         </div>
         <div class="col-sm-12 col-md-10">
-          <FormNote :propsUpdateNote="updateNote"/>
+          <FormNote/>
         </div>
       </div>
     </div>
@@ -58,11 +58,6 @@
         };
         this.notes.push(note);
         this.editNote(newId);
-      },
-      updateNote(id, title, description){
-        let noteIndex = this.notes.findIndex(notes => notes.id === id);
-        this.notes[noteIndex].title = title;
-        this.notes[noteIndex].description = description;
       }
     }
   }

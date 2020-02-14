@@ -41,11 +41,16 @@
         methods: {
             submitNote(e) {
                 e.preventDefault();
+                let data = {
+                        title : this.title,
+                        description : this.description
+                    }
                 console.log(this.title);
                 if (this.id == 0) {
                     this.propsSaveNote(this.id, this.title, this.description);
                 } else {
-                    this.propsUpdateNote(this.id, this.title, this.description);
+                    data.id = this.id;
+                    this.$root.$emit('emitUpdateNote', data);
                 }
                 this.resetInput();
             },
