@@ -12,19 +12,12 @@
 </template>
 
 <script>
+    import axios from 'axios';
     export default {
         name: "ListNote",
         data: function () {
             return {
-                notes: [{
-                    id: 1,
-                    title: 'Artikel 1',
-                    description: 'Des 1'
-                }, {
-                    id: 2,
-                    title: 'Artikel 2',
-                    description: 'Des 2'
-                }]
+                notes: []
             }
         },
         componets: {
@@ -49,9 +42,16 @@
                     newId = this.notes[this.notes.length - 1].id + 1;
                 }
                 return newId;
+            },
+            getData(){
+                axios.get('http://localhost/ProjectVueWegodev2/note').then(response =>{
+                    console.log(response);
+                    this.notes = response.data;
+                });
             }
         },
         mounted() {
+            this.getData();
             this.$root.$on('emitRemove', data => {
                 let noteIndex = this.notes.findIndex(notes => notes.id === data.id);
                 this.notes.splice(noteIndex, 1);
