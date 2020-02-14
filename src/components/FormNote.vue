@@ -47,7 +47,7 @@
                     }
                 console.log(this.title);
                 if (this.id == 0) {
-                    this.propsSaveNote(this.id, this.title, this.description);
+                    this.$root.$emit('emitSaveNote', data);
                 } else {
                     data.id = this.id;
                     this.$root.$emit('emitUpdateNote', data);

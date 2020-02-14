@@ -42,6 +42,15 @@
                 this.$root.$emit('emitForm', dataForm);
                 // console.log(this.dataForm);
             },
+            createNewId() {
+                let newId = 0;
+                if (this.notes.length === 0) {
+                    newId = 1;
+                } else {
+                    newId = this.notes[this.notes.length - 1].id + 1;
+                }
+                return newId;
+            }
         },
         mounted() {
             this.$root.$on('emitRemove', data => {
@@ -52,6 +61,16 @@
                 let noteIndex = this.notes.findIndex(notes => notes.id === data.id);
                 this.notes[noteIndex].title = data.title;
                 this.notes[noteIndex].description = data.description;
+            });
+            this.$root.$on('emitSaveNote', data => {
+                let newId = this.createNewId();
+                let note = {
+                    'id': newId,
+                    'title': data.title,
+                    'description': data.description
+                };
+                this.notes.push(note);
+                this.editNote(newId);
             });
         }
     }

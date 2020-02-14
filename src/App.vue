@@ -41,25 +41,10 @@
     },
     methods: {
       newNote(){
-        this.dataForm = {'id':0,'title': '','description' : ''}
-      },
-      saveNote(id, title, description){
-        let newId = 0;
-        if(this.notes.length === 0){
-          newId = 1;
-        }else{
-          newId = this.notes[this.notes.length - 1].id + 1;
-        }
-
-        let note = {
-          'id' : newId,
-          'title' : title,
-          'description' : description
-        };
-        this.notes.push(note);
-        this.editNote(newId);
+        let dataForm = {'id':0,'title': '','description' : ''}
+        this.$root.$emit('emitForm', dataForm);
       }
-    }
+  }
   }
 </script>
 
