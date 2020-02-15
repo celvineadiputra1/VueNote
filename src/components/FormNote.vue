@@ -12,9 +12,13 @@
             </div>
             <div class="row">
                 <div class="col-sm-12 pt-3">
-                    <div class="alert alert-success" v-if="alert">
-                        {{alert_message}}
-                    </div>
+                    <b-alert :show="dismissCountDown" fade dismissible variant="success" @dismissed="dismissCountDown=0"
+                        @dismiss-count-down="countDownChanged">
+                        <h2>
+                            {{alert_message}}
+                        </h2>
+                        Close in {{ dismissCountDown }} seconds...
+                    </b-alert>
                 </div>
             </div>
             <div class="row mt-4">
@@ -32,6 +36,7 @@
 
 <script>
     import axios from 'axios';
+    import { BAlert } from 'bootstrap-vue';
     export default {
         name: 'FormNote',
         props: {},
@@ -43,16 +48,24 @@
                 mode: 'save',
                 alert: false,
                 alert_message: '',
+                dismissSecs: 5,
+                dismissCountDown: 0,
                 base_url_input: 'http://localhost/ProjectVueWegodev2/note/create'
             }
         },
+        components:{
+            'b-alert': BAlert
+        },
         methods: {
+            countDownChanged(dismissCountDown) {
+                this.dismissCountDown = dismissCountDown
+            },
             submitSave() {
                 let param = new URLSearchParams();
                 param.append('title', this.title);
                 param.append('description', this.description);
                 axios.post(this.base_url_input, param).then(response => {
-                    
+
                     let data = {
                         id: response.data.id,
                         title: this.title,
@@ -61,9 +74,9 @@
                     this.$root.$emit('emitSaveNote', data);
 
                     this.alert_message = response.data.pesan;
-                    this.alert = true;
-                });
 
+                    this.dismissCountDown = this.dismissSecs
+                });
             },
             submitUpdate() {
                 let data = {
