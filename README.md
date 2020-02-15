@@ -32,7 +32,3 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
  ```
  Development
  ```
-
-
-### SS
-![Test Image 1](https://www.google.com/webhp?hl=en&sa=X&ved=0ahUKEwiO4uWS09LnAhW2yzgGHS7eB_QQPAgH)
