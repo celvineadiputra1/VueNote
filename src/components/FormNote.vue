@@ -36,7 +36,9 @@
 
 <script>
     import axios from 'axios';
-    import { BAlert } from 'bootstrap-vue';
+    import {
+        BAlert
+    } from 'bootstrap-vue';
     export default {
         name: 'FormNote',
         props: {},
@@ -49,10 +51,11 @@
                 alert_message: '',
                 dismissSecs: 5,
                 dismissCountDown: 0,
-                base_url_input: 'http://localhost/ProjectVueWegodev2/note/create'
+                base_url_input: 'http://localhost/ProjectVueWegodev2/note/create',
+                base_url_update: 'http://localhost/ProjectVueWegodev2/note/update'
             }
         },
-        components:{
+        components: {
             'b-alert': BAlert
         },
         methods: {
@@ -70,6 +73,7 @@
                         title: this.title,
                         description: this.description
                     }
+
                     this.$root.$emit('emitSaveNote', data);
 
                     this.alert_message = response.data.pesan;
@@ -78,12 +82,22 @@
                 });
             },
             submitUpdate() {
-                let data = {
-                    id: this.id,
-                    title: this.title,
-                    description: this.description
-                }
-                this.$root.$emit('emitUpdateNote', data);
+                let param = new URLSearchParams();
+                param.append('id', this.id);
+                param.append('title', this.title);
+                param.append('description', this.description);
+
+                axios.post(this.base_url_update, param).then(response => {
+                    let data = {
+                        id : this.id,
+                        title : this.title,
+                        description : this.description
+                    }
+                    this.$root.$emit('emitUpdateNote', data);
+
+                    this.alert_message = response.data.pesan;
+                    this.dismissCountDown = this.dismissSecs
+                });
             },
             submitRemove() {
                 let data = {

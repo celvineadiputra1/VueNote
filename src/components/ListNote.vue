@@ -33,6 +33,7 @@
             getData(){
                 axios.get(this.base_url_get).then(response =>{
                     this.notes = response.data;
+                    console.table(this.notes);
                 });
             }
         },
@@ -43,6 +44,7 @@
                 this.notes.splice(noteIndex, 1);
             });
             this.$root.$on('emitUpdateNote', data => {
+                console.log(data.id);
                 let noteIndex = this.notes.findIndex(notes => notes.id === data.id);
                 this.notes[noteIndex].title = data.title;
                 this.notes[noteIndex].description = data.description;
