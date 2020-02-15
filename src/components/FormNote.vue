@@ -52,7 +52,8 @@
                 dismissSecs: 5,
                 dismissCountDown: 0,
                 base_url_input: 'http://localhost/ProjectVueWegodev2/note/create',
-                base_url_update: 'http://localhost/ProjectVueWegodev2/note/update'
+                base_url_update: 'http://localhost/ProjectVueWegodev2/note/update',
+                base_url_delete: 'http://localhost/ProjectVueWegodev2/note/delete'
             }
         },
         components: {
@@ -89,9 +90,9 @@
 
                 axios.post(this.base_url_update, param).then(response => {
                     let data = {
-                        id : this.id,
-                        title : this.title,
-                        description : this.description
+                        id: this.id,
+                        title: this.title,
+                        description: this.description
                     }
                     this.$root.$emit('emitUpdateNote', data);
 
@@ -100,11 +101,19 @@
                 });
             },
             submitRemove() {
-                let data = {
-                    id: this.id
-                }
-                this.$root.$emit('emitRemove', data);
-                this.resetInput();
+                let param = new URLSearchParams();
+                param.append('id', this.id);
+
+                axios.post(this.base_url_delete, param).then(response => {
+                    let data = {
+                        id: this.id
+                    }
+                    this.$root.$emit('emitRemove', data);
+
+                    this.alert_message = response.data.pesan;
+                    this.dismissCountDown = this.dismissSecs
+                    this.resetInput();
+                });
             },
             resetInput() {
                 this.id = 0;
