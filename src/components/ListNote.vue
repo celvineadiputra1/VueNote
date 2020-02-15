@@ -17,16 +17,12 @@
         name: "ListNote",
         data: function () {
             return {
-                notes: []
+                notes: [],
+                base_url_get : 'http://localhost/ProjectVueWegodev2/note'
             }
         },
         componets: {
 
-        },
-        props: {
-            propsEditNote: {
-                type: Function
-            }
         },
         methods: {
             editNote(id) {
@@ -34,18 +30,8 @@
                 dataForm.mode = 'update';
                 this.$root.$emit('emitForm', dataForm);
             },
-            createNewId() {
-                let newId = 0;
-                if (this.notes.length === 0) {
-                    newId = 1;
-                } else {
-                    newId = this.notes[this.notes.length - 1].id + 1;
-                }
-                return newId;
-            },
             getData(){
-                axios.get('http://localhost/ProjectVueWegodev2/note').then(response =>{
-                    console.log(response);
+                axios.get(this.base_url_get).then(response =>{
                     this.notes = response.data;
                 });
             }
@@ -62,14 +48,13 @@
                 this.notes[noteIndex].description = data.description;
             });
             this.$root.$on('emitSaveNote', data => {
-                let newId = this.createNewId();
                 let note = {
-                    'id': newId,
+                    'id': data.id,
                     'title': data.title,
                     'description': data.description
                 };
-                this.notes.push(note);
-                this.editNote(newId);
+                this.notes.unshift(note);
+                this.editNote(data.id);
             });
         }
     }

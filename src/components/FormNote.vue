@@ -1,11 +1,20 @@
 <template>
-    <div class="container-fluid mt-3">
+    <div class="container-fluid p-0">
         <form>
+            <div class="row bg-gray p-3">
+                <div class="col-sm-12 d-flex justify-content-end">
+                    <button v-if="mode == 'save'" class="btn btn-success mr-2" type="button"
+                        @click="submitSave">Save</button>
+                    <button v-if="mode == 'update'" class="btn btn-success mr-2" type="button"
+                        @click="submitUpdate">Update</button>
+                    <button class="btn btn-danger mr-2" @click="submitRemove">Delete</button>
+                </div>
+            </div>
             <div class="row">
-            <div class="col-sm-12 d-flex justify-content-end">
-                <button v-if="mode == 'save'" class="btn btn-success mr-2" type="button" @click="submitSave">Save</button>
-                <button v-if="mode == 'update'" class="btn btn-success mr-2" type="button" @click="submitUpdate">Update</button>
-                <button class="btn btn-danger mr-2" @click="submitRemove">Delete</button>
+                <div class="col-sm-12 pt-3">
+                    <div class="alert alert-success" v-if="alert">
+                        {{alert_message}}
+                    </div>
                 </div>
             </div>
             <div class="row mt-4">
@@ -22,36 +31,52 @@
 </template>
 
 <script>
+    import axios from 'axios';
     export default {
         name: 'FormNote',
         props: {},
-    data : function(){
-        return {
-            id : 0,
-            title : '',
-            description : '',
-            mode : 'save'
-        }
-    },
+        data: function () {
+            return {
+                id: 0,
+                title: '',
+                description: '',
+                mode: 'save',
+                alert: false,
+                alert_message: '',
+                base_url_input: 'http://localhost/ProjectVueWegodev2/note/create'
+            }
+        },
         methods: {
             submitSave() {
-                let data= {
-                    id : this.id,
-                    title : this.title,
-                    description : this.description
-                }
-                this.$root.$emit('emitSaveNote', data);
+                let param = new URLSearchParams();
+                param.append('title', this.title);
+                param.append('description', this.description);
+                axios.post(this.base_url_input, param).then(response => {
+                    
+                    let data = {
+                        id: response.data.id,
+                        title: this.title,
+                        description: this.description
+                    }
+                    this.$root.$emit('emitSaveNote', data);
+
+                    this.alert_message = response.data.pesan;
+                    this.alert = true;
+                });
+
             },
-            submitUpdate(){
-                let data= {
-                    id : this.id,
-                    title : this.title,
-                    description : this.description
+            submitUpdate() {
+                let data = {
+                    id: this.id,
+                    title: this.title,
+                    description: this.description
                 }
                 this.$root.$emit('emitUpdateNote', data);
             },
             submitRemove() {
-                let data = {id : this.id}
+                let data = {
+                    id: this.id
+                }
                 this.$root.$emit('emitRemove', data);
                 this.resetInput();
             },
