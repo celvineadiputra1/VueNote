@@ -7,7 +7,7 @@
                         @click="submitSave">Save</button>
                     <button v-if="mode == 'update'" class="btn btn-success mr-2" type="button"
                         @click="submitUpdate">Update</button>
-                    <button class="btn btn-danger mr-2" @click="submitRemove">Delete</button>
+                    <button class="btn btn-danger mr-2" @click="submitRemove" type="button">Delete</button>
                 </div>
             </div>
             <div class="row">
