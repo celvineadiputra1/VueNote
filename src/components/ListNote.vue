@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="max-100">
         <ul class="list-group">
             <li v-for="(row, index) in notes" :key="index" class="list-group-item mb-2" @click="editNote(row.id)">
                 <label class="d-block">{{row.title}}</label>
@@ -74,6 +74,13 @@
 
     .list-group-item:hover {
         background-color: rgba(0, 0, 0, 0.123);
+        cursor: pointer;
+    }
+    .max-100{
+        max-height: calc(100vh - 9rem);
+        overflow-y: scroll;
+    }
+    ui > li {
         cursor: pointer;
     }
 </style>
