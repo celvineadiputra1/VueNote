@@ -46,7 +46,6 @@
                 title: '',
                 description: '',
                 mode: 'save',
-                alert: false,
                 alert_message: '',
                 dismissSecs: 5,
                 dismissCountDown: 0,
@@ -111,7 +110,7 @@
 </script>
 <style scoped>
     * {
-        font-family: 'SecularOne';
+        font-family: 'RR';
     }
 
     .form-control {
